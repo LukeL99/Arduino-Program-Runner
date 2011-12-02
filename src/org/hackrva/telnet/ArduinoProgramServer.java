@@ -18,7 +18,7 @@ public class ArduinoProgramServer
         try
         {
             ProgramLauncherSingleton launcher = ProgramLauncherSingleton.getInstance();
-            if (args[0] != null)
+            if (args[0] != null && !args[0].isEmpty())
             {
                 launcher.setPath(args[0]);
 
