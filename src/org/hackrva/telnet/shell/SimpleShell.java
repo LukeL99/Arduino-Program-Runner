@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hackrva.telnet.ProgramLauncherSingleton;
+
 import net.wimpi.telnetd.io.BasicTerminalIO;
 import net.wimpi.telnetd.net.Connection;
 import net.wimpi.telnetd.net.ConnectionEvent;
@@ -11,7 +13,7 @@ import net.wimpi.telnetd.shell.Shell;
 
 public class SimpleShell implements Shell
 {
-
+        
     private Connection m_Connection;
     private BasicTerminalIO m_IO;
 
@@ -32,8 +34,11 @@ public class SimpleShell implements Shell
                 int i = m_IO.read();
                 if (i == BasicTerminalIO.ENTER)
                 {
+                    m_IO.write("\r\n"); // some output
+                    m_IO.flush(); // flush the output to ensure it is sent
+
                     char[] charArray = new char[chars.size()];
-                    for (int j = 0; i < chars.size(); i++)
+                    for (int j = 0; j < chars.size(); j++)
                     {
                         charArray[j] = chars.get(j);
                     }
@@ -42,11 +47,22 @@ public class SimpleShell implements Shell
                     {
                         m_IO.write("Running program.\r\n"); // some output
                         m_IO.flush(); // flush the output to ensure it is sent
+                        ProgramLauncherSingleton.getInstance().launchProgram();
                     }
+                    else
+                    {
+                        m_IO.write("Invalid Input.\r\n"); // some output
+                        m_IO.flush(); // flush the output to ensure it is sent
+                    }
+                    
+                    chars = new ArrayList<Character>();
                 }
                 else
                 {
-                    chars.add(new Character((char) i));
+                    char c = (char) i;
+                    chars.add(c);
+                    m_IO.write(c);
+                    m_IO.flush();
                 }
             }
         }
