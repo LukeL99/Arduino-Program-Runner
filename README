@@ -1,0 +1,11 @@
+This is a program that will run a telnet server on your computer and run a program when it receives the string "execute" followed by an enter (which should be a "\r\n" on your arduino).
+
+https://github.com/LukeL99/Arduino-Program-Runner/raw/master/dist/telnet.jar
+
+1) Download that file to you computer and save it somewhere on your hard drive. Your user directory would probably be best.
+2) Figure out the path to the program you want to execute. In this example we'll use ~/script.sh
+3) Ensure you have java installed, but I believe it should be installed on Macs by default
+4) Navigate to the directory that you downloaded telnet.jar to
+5) Run the command:     java -jar telnet.jar ~/script.sh         replacing "~/script.sh" with the path to your executable
+6) Connect with telnet through the arduino to your computer on port 6666
+7) Send the "execute" command through your arduino and it should launch the program you specified
